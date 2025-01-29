@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title><%= title %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <%- include('partials/navbar', { isAuthenticated: true }) %>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800"><%= title %></h1>
+            <a 
+                href="/create-post" 
+                class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+            >
+                Create New Post
+            </a>
+        </div>
+
+        <% if (posts.length === 0) { %>
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <p class="text-gray-600">You haven't created any posts yet.</p>
+            </div>
+        <% } else { %>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <% posts.forEach(function(post) { %>
+                    <div class="bg-white p-6 rounded-lg shadow-md relative">
+                        <div class="absolute top-2 right-2 flex space-x-2">
+                            <a 
+                                href="/edit-post/<%= post._id %>" 
+                                class="text-blue-500 hover:text-blue-700"
+                                title="Edit Post"
+                            >
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form 
+                                action="/like-post/<%= post._id %>" 
+                                method="POST" 
+                                class="inline-block"
+                            >
+                                <button 
+                                    type="submit" 
+                                    class="text-red-500 hover:text-red-700 focus:outline-none"
+                                    title="Like Post"
+                                >
+                                    <i class="fas fa-heart"></i>
+                                    <span class="ml-1"><%= post.likes ? post.likes.length : 0 %></span>
+                                </button>
+                            </form>
+                        </div>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= post.title %></h2>
+                        <p class="text-gray-600 mb-4"><%= post.content.substring(0, 100) %>...</p>
+                        <div class="flex justify-between items-center">
+                            <a 
+                                href="/post/<%= post._id %>" 
+                                class="text-blue-500 hover:underline"
+                            >
+                                Read More
+                            </a>
+                            <span class="text-sm text-gray-500">
+                                <%= new Date(post.createdAt).toLocaleDateString() %>
+                            </span>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

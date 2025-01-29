@@ -1,0 +1,16 @@
+<nav class="fixed top-0 left-0 w-full bg-white/70 backdrop-blur-md z-50 shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-blue-600">BlogConnect</a>
+        <div class="flex space-x-4 items-center">
+            <% if (locals.isAuthenticated) { %>
+                <a href="/posts" class="text-gray-700 hover:text-blue-600 transition">My Posts</a>
+                <a href="/create-post" class="text-gray-700 hover:text-blue-600 transition">Create Post</a>
+                <a href="/logout" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Logout</a>
+            <% } else { %>
+                <a href="/login" class="text-gray-700 hover:text-blue-600 transition">Login</a>
+                <a href="/register" class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition">Sign Up</a>
+            <% } %>
+        </div>
+    </div>
+</nav>
+<div class="pt-16"></div> <!-- Spacer to prevent content from being hidden behind navbar -->
